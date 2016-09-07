@@ -1,0 +1,44 @@
+#include<stdio.h>
+int rect(int l,int b);
+int tri(int bs,int h);
+int circ(int r);
+void main()
+{
+ int l,b,bs,h,r;
+ int ch;
+ printf("enter your choice 1-rectangle 2-triangle 3-circle 4-exit");
+ scanf("%d\n",&ch);
+ do
+ {
+ switch(ch)
+ {
+ case 1:printf("enter the parameters");
+        scanf("%d %d",&l,&b);
+        printf("area is:%d\n",rect(l,b));
+         printf("enter your choice 1-rectangle 2-triangle 3-circle 4-exit");
+         scanf("%d\n",&ch);
+         break;
+  case 2:printf("enter the parameters");
+        scanf("%d %d",&bs,&h);
+        printf("area is:%d\n",tri(bs,h));
+         printf("enter your choice 1-rectangle 2-triangle 3-circle 4-exit");
+         scanf("%d\n",&ch);
+         break;     
+  case 3:printf("enter the parameters");
+        scanf("%d",&r);
+        printf("area is:%d\n",circ(r));
+         printf("enter your choice 1-rectangle 2-triangle 3-circle 4-exit");
+         scanf("%d\n",&ch);
+         break;       
+  case 4: break;
+  }
+  }while(ch!=4);
+  }
+  int rect(int l,int b)
+  {return l*b;}
+  int tri(int bs,int h)
+  {return 0.5*bs*h;}
+  int circ(int r);
+  {return 3.14*r*r;}
+         
+        
