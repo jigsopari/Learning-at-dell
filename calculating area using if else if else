@@ -1,0 +1,54 @@
+#include<stdio.h>
+void rect();
+void tri();
+void circ();
+void main()
+{
+int ch;
+printf("enter 1-rect,2-tri,3-circle,4-exit");
+scanf("%d\n",&ch);
+while(ch!=4)
+{
+if(ch==1)
+{
+rect();
+printf("enter 1-rect,2-tri,3-circle,4-exit");
+scanf("%d\n",&ch);
+}
+else if(ch==2)
+{
+tri();
+printf("enter 1-rect,2-tri,3-circle,4-exit");
+scanf("%d\n",&ch);
+}
+else if(ch==3)
+{
+circ();
+printf("enter 1-rect,2-tri,3-circle,4-exit");
+scanf("%d\n",&ch);
+}
+else
+{
+exit (0);
+}
+}
+}
+void rect(int l,int b)
+{
+int l,b;
+printf("enter values");
+scanf("%d %d \n",&l,&b);
+printf("area is : %d \n", (l*b));
+}
+void tri(int bs,int h)
+{
+printf("enter values");
+scanf("%d %d \n",&bs,&h);
+printf("area is : %f \n", (0.5*bs*h));
+}
+void circ(int r)
+{
+printf("enter values");
+scanf("%d \n",&r);
+printf("area is : %d \n", (3.14*r*r));
+}
