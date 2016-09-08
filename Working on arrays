@@ -1,0 +1,95 @@
+#include<stdio.h>
+#define NUM 16
+void fillarray();
+void printmarks(int marks[NUM]);
+int avg(int marks[NUM]);
+void aboveavg(int marks[NUM],int av);
+int min(int marks[NUM]);
+int max(int marks[NUM]);
+int passcount(int marks[NUM]);
+void main()
+{
+int i;
+int marks[NUM];
+fillarray();
+printmarks(marks);
+
+int av=avg(marks);
+printf("average marks are:%d\n",av);
+
+int c=aboveavg(marks,av);
+printf("No. os students whose marks are above average are;%d\n",c);
+
+int mn=min(marks);
+printf("minimum marks are:%d\n",mn);
+
+int mx=max(marks);
+printf("maximum marks are;%d\n",mx);
+
+int pc=passcount(marks);
+printf("no. of students passed is:%d\n",pc);
+
+}
+void fillarray()
+{
+printf("enter marks");
+int i;
+for(i=0;i<NUM;i++)
+scanf("%d",&marks[i]);
+}
+void printmarks(int marks[NUM])
+{
+printf("marks of students are:");
+int i;
+for(i=0;i<NUM;i++)
+printf("%d\n",marks[i]);
+}
+int avg(int marks[NUM])
+{
+int s=0,i,av;
+for(i=0;i<NUM;i++)
+s=s+marks[i];
+av=s/NUM;
+return av;
+}
+int aboveavg(int marks[NUM],int avg)
+{
+int i,c=0;
+for(i=0;i<NUM;i++)
+{
+if(marks[i]>av)
+c+=1;
+}
+return c;
+}
+int min(int marks[NUM])
+{
+int i;
+int mn=marks[0];
+for(i=0;i<NUM;i++)
+{
+if(marks[i]<mn)
+mn=marks[i];
+}
+return mn;
+}
+int max(int marks[NUM])
+{
+int i,mx=marks[0];
+for(i=0;i<NUM;i++)
+{
+if(marks[i]>mx)
+mx=marks[i];
+}
+return mx;
+}
+int passcount(int marks[NUM])
+{
+int i,c=0;
+for(i=0;i<NUM;i++)
+{
+if(marks[i]>40)
+c+=1;
+}
+return c;
+}
