@@ -1,3 +1,4 @@
+Q:-2 inputs and 3 outputs from the function
 #include<stdio.h>
 void getSumDifAndProduct(int a,int b,int *sum,int *dif,int *product)
 {
@@ -17,3 +18,81 @@ int main()
   printf("difference=%d\n",dif);
   printf("product=%d\n",product);
 }
+
+Q:-2 inputs and 3 outputs but as buffer pntr(array of pointers)
+
+#include<stdio.h>
+void getsumdifprod(int a,int b,int *ptr)
+{
+*ptr=a+b;
+*(ptr+1)=a-b;
+*(ptr+2)=a*b;
+}
+void main()
+{
+int a,b,ptr[3]; // static memory allocation//
+printf("enter a:");
+scanf("%d",&a);
+printf("enter b:");
+scand("%d",&b);
+getsumdifprod(a,b,ptr);
+printf("sum is=%d",*ptr);
+printf("diff is=%d",*(ptr+1));
+printf(prod is=%d",*(ptr+2));
+}
+
+Q:-3 use buffer and assign array of pointer using malloc
+#include<stdio.h>
+void getsumdifprod(int a,int b,int *ptr)
+{
+*ptr=a+b;
+*(ptr+1)=a-b;
+*(ptr+2)=a*b;
+}
+void main()
+{
+int a,b,*ptr;
+ptr=(int *)malloc(3*sizeof(int)); //dynamic memory allocation//
+printf("enter a:");
+scanf("%d",&a);
+printf("enter b:");
+scand("%d",&b);
+getsumdifprod(a,b,ptr);
+printf("sum is=%d",*ptr);
+printf("diff is=%d",*(ptr+1));
+printf(prod is=%d",*(ptr+2));
+}
+
+Q:-4 takes pointer to structure and fills the structure with sum diff and product
+
+#include<stdio.h>
+typedef struct
+{
+int sum;
+int diff;
+int prod;
+}outstrct;
+void getsumdifprod(int a,int b, outstrct *ptr)
+{
+pt->sum=a+b;
+pt->diff=a-b;
+pt->prod=a*b;
+}
+void main()
+{
+int a,b;
+outstrct var;
+printf("enter values of a and b");
+scanf("%d %d",&a,&b);
+getsumdifprod(a,b,&var);
+printf("sum is;%d",var.sum);
+printf("diff is:%d",var.diff);
+printf("prod=%d",var.prod);
+}
+
+
+
+
+
+
+
