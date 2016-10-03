@@ -65,4 +65,25 @@ int f3();
  f2();
  }
  
+ Now if we have make utility something like below:->
+ 
+ OBJS= mn.o mstrlen.o mstrcpy.o mstrcat.o cntvwls.o cntwords.o 
+ strprg: $(OBJS)
+         cc -o strprg $(OBJS)
+mn.o :mn.c mystr.h
+        cc -c mn.c
+mstrlen.o: mstrlen.c mystr.h
+        cc -c mstrlen.c
+mstrcpy.o: mstrcpy.c mystr.h
+        cc -c mstrcpy.c
+mstrcat.o:mstrcat.c mystr.h
+        cc -c mstrcat.c
+cntvwls.o: cntvwls.c mystr.h
+        cc -c cntvwls.c
+cntwords.o:cntwords.c mystr.h
+        cc -c cntwords.c
+        
+        So if any changes in any .c file it will compile only that file and reflect the changes but if mystr.h is chnaged all the files will be compiled cz all of the files have dependcy on mystr.h file
+        
+
  
