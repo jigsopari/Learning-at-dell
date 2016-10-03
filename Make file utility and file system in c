@@ -1,0 +1,68 @@
+f1.c :->
+int f1()
+{
+printf("i am function 1");
+return 0;
+}
+
+
+int f2()
+{
+printf("i am function 2");
+return 0;
+}
+
+int f3()
+{
+printf("i am function 3");
+return 0;
+}
+
+mn.c:-
+#include<stdio.h>
+#include "f1.c"
+#include "f2.c"
+#include "f3.c"
+void main()
+{
+f1();
+f2();
+f3();
+}
+
+vim makefile:-
+
+target: mn.o f1.o f2.o f3.o f4.o
+        cc -o target mn.o f1.o f2.o f3.o f4.o
+mn.o: mn.c
+        cc -c mn.c
+f1.o: f1.c
+        cc -c f1.c
+f2.o: f2.c
+        cc -c f2.c
+f3.o: f3.c
+        cc -c f3.c
+f4.o: f4.c
+        cc -c f4.c
+
+Now in the above main file we had:
+#include "f1.c"
+#include "f2.c"
+#include "f3.c"
+
+which can be replaced with a header file called myheader.h which contains the prototype of all the functions like:
+int f1();
+int f2();
+int f3();
+ and istead of that we can include the header file in mn.c like:
+ 
+ #include<stdio.h>
+ #include "myheader.h"
+ void main();
+ {
+ f1();
+ f3();
+ f2();
+ }
+ 
+ 
