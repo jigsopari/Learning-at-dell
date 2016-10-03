@@ -1,0 +1,19 @@
+#include<stdio.h>
+void f3()
+{
+printf("i am function 3\n");
+}
+
+void f2( void (*ptr)())
+{
+printf("i am in function 2\n");
+printf("i am calling function 3\n");
+(*ptr)();
+}
+
+void main()
+{
+printf("i am in main\n");
+printf("i am calling function 2\n");
+f2(f3);
+}
