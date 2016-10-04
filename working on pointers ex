@@ -39,12 +39,12 @@ n++;
 void main()
 {
 int i;
-char arr[128];
-for(i=0;i<=127;i++)
-arr[i]=i;
-dispBytes(arr,128);
-dispWords((unsigned short *)arr,64);
-dispLongs((unsigned int *)arr,32);
+char arr[128]; //char *ptr;
+for(i=0;i<=127;i++) //ptr=(char *)malloc(128*sizeof(char));
+arr[i]=i; //*(ptr+i)=i;
+dispBytes(arr,128);//dispBytes(ptr,128);
+dispWords((unsigned short *)arr,64);//dispWords((unsigned short *)ptr,64);
+dispLongs((unsigned int *)arr,32);//dispLongs((unsigned int *)ptr,32);
 }
 
 
