@@ -1,0 +1,62 @@
+ex1.c:->
+
+#include<stdio.h>
+void main()
+{
+int intval,*p1;
+short shval,*p2;
+char chval,*p3;
+
+*p1=&intval;
+*p2=&shval;
+*p3=&chval;
+
+*p1=1000;
+*p2=100;
+*p3=10;
+
+printf("intval=%d\n",intval);
+printf("chval=%d\n",chval);
+printf("shval=%d\n",shval);
+}
+
+ex2.c:-> Define only 1 char pointer and use it to access all using type casting
+
+#include<stdio.h>
+void main()
+{
+int intval=0x12345678,i;
+short shval=0x3456;
+char chval=0x12,*p1;
+p1=(char *)&intval;
+for(i=0;i<4;i++)
+  printf("\n intval = %x", *(p1+i));
+  
+p1=(char *)&shval;
+for(i=0;i<2;i++)
+   printf("\n shval=%x",*(p1+i));
+ p1=&chval;
+   printf("\n chval=%x",*p1);
+   
+}   
+
+ex3.c-> define char short and int pointer. initialize with unsigned int variable x=0x12345678 and then print their values in hex
+
+#include<stdio.h>
+void main()
+{
+int *intptr;
+char *chptr;
+short *shptr;
+unsigned int x=0x12345678;
+
+intptr=&x;
+shptr=(short *)&x;
+chptr=(char *)&x;
+
+printf("intptr=%x\n",*intptr); // (*intptr+5)
+printf("shptr=%x\n",*shptr);  //(*shptr+5)
+printf("chptr=%x\n",*chptr);  //(*chptr+5)
+}
+
+
