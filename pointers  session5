@@ -1,0 +1,139 @@
+ex8:->
+#include<stdio.h>
+void main()
+{
+float fval=10.1234;int i;
+char *ptr;
+ptr=(char *)&fval;
+printf("float variable is:");
+for(i=0;i<4;i++)
+{
+printf("%02x",*(ptr+i));
+}
+}
+
+ex9:->
+#include<stdio.h>
+void fillMemory(unsigned char *pBuf,int size,unsigned char val)
+{
+  int i;
+  for(i=0;i<=(size-1);i++)
+  {
+   *(pBuf+i)=val;
+  }
+}
+  
+void main()
+{
+  int i,n=1;
+  char arr[64];
+  fillMemory(arr,64,1);
+  for(i=0;i<=63;i++)
+  {
+    printf("%d ",arr[i]);
+    if(n%16==0)
+    printf("\n");
+
+    n++;
+  }
+} 
+
+ex10:->
+#include<stdio.h>
+void main()
+{
+  unsigned int val=0xabcd1234;
+  char *p;
+  p=(char *)&val;
+  printf("before over written val=%x \n",val);
+  *(p+2)=0xef;
+  printf("after over written val=%x \n",val);
+}
+
+ex11:->
+main()
+{
+  int ival=0x12345678,i;
+  char cval=0x9a;
+  float fval=1234.5678;
+  short sval=0xbcde;
+  int ival1=0xf1234567;
+  unsigned char message[15];
+  char *ptr;
+  ptr=(char *)&ival;
+  message[0]=*ptr;
+  message[1]=*(ptr+1);
+  message[2]=*(ptr+2);
+  message[3]=*(ptr+3);
+  message[4]=cval;
+  ptr=(char *)fval;
+  message[5]=*ptr;
+  message[6]=*(ptr+1);
+  message[7]=*(ptr+2);
+  message[8]=*(ptr+3);
+  ptr=(char *)&sval;
+  message[9]=*ptr;
+  message[10]=*(ptr+1);
+  ptr=(char *)&ival1;
+  message[11]=*ptr;
+  message[12]=*(ptr+1);
+  message[13]=*(ptr+2);
+  message[14]=*(ptr+3);
+ /* memcpy(&message[5],(unsigned char *)&fval,4);
+  memcpy(&message[9],(unsigned char *)&sval,2);
+  memcpy(&message[11],(unsigned char *)&ival1,4);*/
+  
+/*  *ptr=(char *)&ival;
+  *(ptr+4)=(char *)&cval;
+  *(ptr+8)=(char *)fcval;
+  *(ptr+12)=(char *)&sval;
+  *(ptr+16)=(char *)&ival1;*/
+  for(i=0;i<15;i++)
+  {
+    printf("%x\n",message[i]);
+  
+}
+} 
+ 
+ ex12:->
+ #include<stdio.h>
+ void function(char *p)
+{
+  int ival,ival1;
+  unsigned char cval;
+  float fval;
+  unsigned short sval;
+  memcpy(&ival,p,4);
+  memcpy(&cval,p+4,1);
+  memcpy(&fval,p+5,4);
+  memcpy(&sval,p+9,2);
+  memcpy(&ival1,p+11,4);
+  printf("ival=%x \tcval=%x \tfval=%f \tsval=%x \tival1=%x \n",ival,cval,fval,     sval,ival1);
+}  
+  
+void main()
+{
+  int ival=0x12345678,i;
+  char cval=0x9a;
+  float fval=1234.5678;
+  short sval=0xbcde;
+  int ival1=0xf1234567;
+  unsigned char message[15];
+  unsigned char *ptr;
+  ptr=(unsigned char *)&ival;
+  message[0]=*ptr;
+  message[1]=*(ptr+1);
+  message[2]=*(ptr+2);
+  message[3]=*(ptr+3);
+  message[4]=cval;
+  memcpy(&message[5],(unsigned char *)&fval,4);
+  memcpy(&message[9],(unsigned char *)&sval,2);
+  memcpy(&message[11],(unsigned char *)&ival1,4);
+  function(message); 
+  /**for(i=0;i<15;i++)
+  {
+    printf("%x\n",message[i]);
+  }*********/
+
+
+ 
