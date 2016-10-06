@@ -1,0 +1,203 @@
+#include<stdio.h>
+typedef struct
+{
+  char name;
+  int no;
+}studentInfo_t;  
+char *pc;
+short *ps;
+int *pi;
+float *pf;
+studentInfo_t *pst;
+void main()
+{
+  pc=(char *)100;
+  ps=(short*)100;
+  pi=(int *)100;
+  pf=(float *)100;
+  pst=(studentInfo_t *)100;
+  printf("Address of pc=%u  value of pc=%d\n",&pc,pc); 
+  printf("Address of ps=%u  value of ps=%d\n",&ps,ps); 
+  printf("Address of pi=%u  value of pi=%d\n",&pi,pi); 
+  printf("Address of pf=%u  value of pf=%d\n",&pf,pf); 
+  printf("Address of pst=%u  value of pst=%d\n",&pst,pst);
+  pc++;
+  ps++;
+  pi++;
+  pf++;
+  pst++;
+  printf("value of pc=%d\n",pc); 
+  printf("value of ps=%d\n",ps); 
+  printf("value of pi=%d\n",pi); 
+  printf("value of pf=%d\n",pf); 
+  printf("value of pst=%d\n",pst);
+  pc+=10;
+  ps+=10;
+  pi+=10;
+  pf+=10;
+  pst+=10;
+  printf("value of pc=%d\n",pc); 
+  printf("value of ps=%d\n",ps); 
+  printf("value of pi=%d\n",pi); 
+  printf("value of pf=%d\n",pf); 
+  printf("value of pst=%d\n",pst);
+} 
+
+ex14:->
+
+#include<stdio.h>
+#define const 0.5
+void areaOfRectangle(int length,int width,int *pArea)  
+{
+  *pArea=length*width;
+}  
+void areaOfTriangle(int base,int height,int *pArea)  
+{
+  *(pArea+1)=const*base*height;
+}  
+void main()
+{
+  int *pArea,length=5,width=2,base=3,height=4;
+  int array[2];
+  pArea=array;
+  areaOfRectangle(length,width,pArea);  
+  areaOfTriangle(base,height,pArea);  
+  printf("Rectangle area=%d\n",*pArea);
+  printf("Triangle area=%d\n",*(pArea+1));
+}      
+	
+ex15:->
+#include<stdio.h>
+int array[10];
+int *p=array;
+void main()
+{
+  int i,j=101;	
+  printf("content of p=%u\n",p);
+  printf("array variables=");	  
+  for(i=0;i<10;i++)
+  {
+    printf("%d ",array[i]);
+  }
+  for(i=0;i<10;i++)
+  {  
+      *(p+i)=j;
+      j++;
+  }    
+  printf("\nafter initialization array variables using array as pointer=");	  
+  
+  for(i=0;i<10;i++)
+  {
+    printf("%d ",*(array+i));
+  }
+  
+  printf("\nafter initialization array variables using  p as pointer=");	  
+
+  for(i=0;i<10;i++)
+  {
+    printf("%d ",*(p+i));
+  }
+  
+  printf("\nafter initialization array variables using  p as pointer and each time by incrementing the pointer=");
+  for(i=0;i<10;i++)
+  {
+    printf("%d ",*p);
+    p++;
+  }
+  
+  printf("\nafter initialization array variables using array as an array=");	  
+
+  for(i=0;i<10;i++)
+  {
+    printf("%d ",array[i]);
+  }
+  
+  ex17.c:->
+  #include<stdio.h>
+typedef struct bookInfo_s
+{
+  int bookId;
+  char title[40];
+  char author[20];
+}bookInfo_t;
+void getBookInfo(bookInfo_t *pBi)
+{
+  printf("Enter book Id:");	
+  scanf("%d",&pBi->bookId);	
+  printf("Enter title:");	
+  scanf("%s",pBi->title);	
+  printf("Enter book author:");	
+  scanf("%s",pBi->author);
+}  
+void printBookInfo_t(bookInfo_t *pBi)
+{
+  printf("book id=%d\n",pBi->bookId);	
+  printf("book title=%s\n",pBi->title);	
+  printf("book author=%s\n",pBi->author);	
+}
+void main()
+{
+  bookInfo_t *pBi;
+  pBi=(bookInfo_t *)malloc(sizeof(bookInfo_t));	
+  getBookInfo(pBi);
+  printBookInfo_t(pBi); 
+}  
+ex16:->
+
+#include<stdio.h>
+void main()
+{
+  int *p,i,j=10;
+  p=(int *)malloc(10);
+  for(i=0;i<10;i++)
+  {
+    *(p+i)=j;
+    j++;
+  }
+  for(i=0;i<10;i++)
+  {
+    printf("%d ",*(p+i));
+  }
+} 
+
+  ex18.c:->
+  #include<stdio.h>
+typedef struct bookInfo_s
+{
+  int bookId;
+  char title[40];
+  char author[20];
+}bookInfo_t;
+void getBookInfo(bookInfo_t *pBi)
+{
+  printf("Enter book Id:");	
+  scanf("%d",&pBi->bookId);	
+  printf("Enter title:");	
+  scanf("%s",pBi->title);	
+  printf("Enter book author:");	
+  scanf("%s",pBi->author);
+}  
+void printBookInfo_t(bookInfo_t *pBi)
+{
+  printf("book id=%d\n",pBi->bookId);	
+  printf("book title=%s\n",pBi->title);	
+  printf("book author=%s\n",pBi->author);	
+}
+void main()
+{
+  int i;
+  bookInfo_t *pBi[5];
+  for(i=0;i<5;i++)
+  {
+  pBi[i]=(bookInfo_t *)malloc(sizeof(bookInfo_t));	
+  getBookInfo(pBi[i]);
+  }
+
+  for(i=0;i<5;i++)
+  {
+  printBookInfo_t(pBi[i]);
+  } 
+}  
+
+  
+
