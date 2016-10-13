@@ -1,0 +1,54 @@
+SIGKILL, SIGSTOP and User Defined Signals
+
+Apart from handling the standard signals(like INT, TERM etc) that are available. We can also have user defined signals that can be sent and handled. Following is the code handling a user defined signal USR1 :
+
+#include<stdio.h>
+#include<signal.h>
+#include<unistd.h>
+
+void sig_handler(int signo)
+{
+    if (signo == SIGUSR1)
+        printf("received SIGUSR1\n");
+    else if (signo == SIGKILL)
+        printf("received SIGKILL\n");
+    else if (signo == SIGSTOP)
+        printf("received SIGSTOP\n");
+}
+
+int main(void)
+{
+    if (signal(SIGUSR1, sig_handler) == SIG_ERR)
+        printf("\ncan't catch SIGUSR1\n");
+    if (signal(SIGKILL, sig_handler) == SIG_ERR)
+        printf("\ncan't catch SIGKILL\n");
+    if (signal(SIGSTOP, sig_handler) == SIG_ERR)
+        printf("\ncan't catch SIGSTOP\n");
+    // A long long wait so that we can easily issue a signal to this process
+    while(1) 
+        sleep(1);
+    return 0;
+}
+We see that in the above code, we have tried to handle a user defined signal USR1. Also, as we know that two signals KILL and STOP cannot be handled. So we have also tried to handle these two signals so as to see how the ‘signal’ system call responds in this case.
+
+When we run the above code :
+
+$ ./sigfunc
+
+can't catch SIGKILL
+
+can't catch SIGSTOP
+So the above output makes clear that as soon as the system call ‘signal’ tries to register handler for KILL and STOP signals, the signal function fails indicating that these two signals cannot be caught.
+
+Now we try to pass the signal USR1 to this process using the kill command:
+
+$ kill -USR1 2678
+and on the terminal where the above program is running we see :
+
+$ ./sigfunc
+
+can't catch SIGKILL
+
+can't catch SIGSTOP
+received SIGUSR1
+So we see that the user defined signal USR1 was received in the process and was handled properly.
