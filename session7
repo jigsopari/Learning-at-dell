@@ -1,0 +1,605 @@
+ex1:->
+
+#include<stdio.h>
+
+main()
+{
+  unsigned int uival;
+  int ch;
+
+  printf("Enter a 32 bit number:");
+  scanf("%x",&uival);
+
+  printf("Enter a bit number that you require:");
+  scanf("%d",&ch);
+
+  uival = uival >> ch;
+  uival = uival & 1;
+
+  printf("uival=%d",uival);
+}
+
+ex2:->
+
+main()
+{
+  unsigned int uival,uival1,ret,ch,range;
+
+  printf("Enter a 32 bit number:");
+ scanf("%x",&uival);
+
+  printf("Enter starting bit number to be extracted of extracted range:");
+  scanf("%d",&ch);
+  printf("Enter No.of bits to be extracted of extracted range:");
+  scanf("%d",&range);
+  uival1=extractBits(uival,ch,range);
+
+  printf("uival=%x",uival1);
+}
+ 
+extractBits(int uival, int ch, int range)
+{
+  int uival1,ret;
+  uival1=uival>>ch;
+  ret=mask(range);
+  uival = uival1 & ret;
+  return  uival;
+}
+
+int mask(int n)
+{
+  int i,p=1;
+  for(i=0;i<n;i++)
+    p=p*2;
+  
+  return(p-1);
+}   
+
+ex3:->
+
+main()
+{
+  unsigned int uival,bitnum,bitval,mask,res;
+
+  printf("Enter a 32 bit number:");
+  scanf("%x",&uival);
+
+  printf("Enter a bit number that you required to set:");
+  scanf("%d",&bitnum);
+  printf("Enter a bit valuer that you required to set:");
+  scanf("%d",&bitval);
+
+  mask=bitnum<<1;
+  if(bitval==1)
+  res=uival|mask;
+
+  else
+  res=uival&~mask;
+  
+  //uival=uival&1;
+
+  printf("resultant uival=%x",res);
+}
+
+ex4:->
+main()
+{
+  unsigned int uival,stbit,bitval,range,res;
+
+  printf("Enter a 32 bit number:");
+  scanf("%x",&uival);
+
+  printf("Enter a starting bit number that you required to set:");
+  scanf("%d",&stbit);
+  printf("Enter a bit value that you required to set:");
+  scanf("%d",&bitval);
+  printf("Enter a No.of bits that you required to set:");
+  scanf("%d",&range);
+
+  res = setbits(uival,stbit,range,bitval);
+  printf("resultant uival=%x",res);
+}
+ 
+
+  int setbits(int uival,int stbit,int range,int bitval)
+{
+  int mask1,res,ret;
+  
+  ret=mask(range);//getting the range number of 1s
+  mask1=ret<<stbit;//moving the number to the masked position
+  
+  if(bitval == 1)
+  res=uival | mask1;
+  
+  else
+    res=uival & (~mask1);
+  
+  return res;
+}
+
+int mask(int range)
+{
+  int p=1,i;
+  for(i=0;i<range;i++)
+     p=p*2;
+  
+  return p-1;
+} 
+
+ex5:->
+
+void showbits(int n)
+{
+  unsigned int k;
+  int i,j,andmask;
+  char array[32];
+  for(i=31;i>=0;i--)
+  {
+    andmask=1<<i;
+    k=n&andmask;
+
+    array[i]=(k==0?0:1);
+  }
+  for(i=31;i>=0;i--)
+  {
+    if(array[i]==1)
+     break;
+     
+  }
+  for(j=i;j>=0;j--)
+   printf("%d",array[j]);
+   
+}
+
+main()
+{
+  unsigned int val,i;
+  printf("Enter hex number:");
+  scanf("%x",&val);
+  printf("the hex equivalent of %x in binary form is= %d",val);
+  showbits(val);
+}  
+
+
+ex6:->
+
+void logical(int i,int j)
+{
+  int ch;
+  unsigned int k;
+  while(1)
+  {
+    printf("\n\n1.logical AND\n");
+    printf("2.logical OR\n");   
+    printf("3.logical NOT\n");  
+    printf("4.exit\n");
+    printf("Enter choice:");
+    scanf("%d",&ch);
+    switch(ch)
+    {
+      case 1:
+          //logiAnd();
+          k=i&&j;
+          printf("\nlogical AND=%x ",k);
+          break;  
+      case 2:
+          //logiOr();
+          k=i||j;
+          printf("\nlogical OR=%x ",k);
+          break;
+      case 3:
+          k=!(i>j); 
+          printf("\nlogical NOT of i>j =%x ",k);
+          break;
+
+      case 4:
+          exit(0);
+     }
+  }
+}         
+void bit(int i,int j)
+{
+  int ch;
+  unsigned int k;
+  while(1)
+  {
+    printf("\n\n1.Bit wise AND\n");
+    printf("2.Bit wise OR\n");   
+    printf("3.Bit wise XOR\n");   
+    printf("4.Bit wise NOT\n");  
+    printf("5.exit\n");
+    printf("Enter choice:");
+    scanf("%d",&ch);
+    switch(ch)
+    {
+      case 1:
+          //bitAnd();
+          k=i&j;
+          printf("Bit wise AND=%x",k);
+          break;  
+      case 2:
+          //bitOr();
+          k=i|j;
+          printf("Bit wise OR=%x",k);
+          break;
+      case 3:
+          //bitXor();
+          k=i^j;
+          printf("Bit wise XOR=%x",k);
+          break;
+      case 4:
+          //bitNot();
+          k=~i;
+          printf("Bit wise NOT of variable i=%x",k);
+          break;
+
+      case 5:
+          exit(1);
+     }
+  }
+}         
+  
+main()
+{
+  int ch;
+  unsigned int i,j;
+  printf("\nEnter the hex value of i:");
+  scanf("%x",&i);
+  printf("\nEnter the hex value of j:");
+  scanf("%x",&j); 
+  while(1)
+  {
+    printf("1.logical operations\n");
+    printf("2.Bit operations\n");
+    printf("3.exit\n");
+    printf("Enter choice:");
+    scanf("%d",&ch);
+    switch(ch)
+    {
+      case 1:
+          logical(i,j);
+          break;
+      case 2:   
+          bit(i,j);
+          break;  
+      case 3:
+          exit(1);
+    }
+  }
+}       
+
+ex7:->
+#include <stdio.h>
+main()
+{
+  int *ptr,i;
+  ptr=(int *)malloc(sizeof(int)*10);
+
+  FILE *ft;
+  FILE *fb;
+
+  ft=fopen("textfile","w");
+  if(ft==NULL)
+  {
+    puts("can not open the text file");
+    exit(1);
+  }
+  
+  for(i=0;i<=9;i++)
+  {
+    printf("Enter integer%d =",i);
+    scanf("%d",&ptr[i]);
+    fprintf(ft,"%d ",ptr[i]);
+  }
+
+  fb=fopen("binfile","wb");
+  if(fb==NULL)
+  {
+    puts("can not open the text file");
+    exit(1);
+  }
+    fwrite(ptr,4,10,fb);
+
+  fclose(ft);
+  fclose(fb);
+}
+
+ex8:->
+#include <stdio.h>
+main()
+{
+   int *ptr,i;
+   char ch;
+  ptr=(int *)malloc(sizeof(int)*10);
+
+  FILE *ft;
+  FILE *fb;
+
+  ft=fopen("textfile","r");
+  if(ft==NULL)
+  {
+    puts("can not open the text file");
+    exit(1);
+  }
+  
+  printf("\ntext file output:");  
+  for(i=0;i<=9;i++)
+  {
+    fscanf(ft,"%d ",ptr+i);
+    printf("%d ",*(ptr+i));
+  }
+
+  fb=fopen("binfile","rb");
+  if(fb==NULL)
+  {
+    puts("can not open the binary file");
+    exit(1);
+  }
+    fread(ptr,4,10,fb);
+    printf("\nbinary file output:");
+    for(i=0;i<=9;i++)
+       printf("%d ",*(ptr+i));
+    
+  fclose(ft);
+  fclose(fb);
+}
+
+ex9:->
+
+void dispAllPrintablechars()
+{
+  int i,k=1;
+  for(i=32;i<=126;i++)
+  {
+    if(k%16==0)
+    putchar('\n');
+    
+    putchar(i);  
+    putchar(' ');  
+    k++;
+  }
+}
+main()
+{
+  dispAllPrintablechars();
+}
+
+ex10:->
+#include <stdio.h>
+void  dispGivenAsciiChars(char start,char end)
+{
+  int i;
+  for(i=start;i<=end;i++)
+  {
+    putchar(i);
+  }
+}
+/*void dispAllPrintablechars()
+{
+  int i,k=1;
+  for(i=32;i<=126;i++)
+  {
+    if(k%16==0)
+
+    putchar('\n');
+    putchar(i);  
+    k++;
+  }
+}*/
+main()
+{
+  char start,end;
+
+  //dispAllPrintablechars();
+
+  printf("Enter starting char:");
+  __fpurge(stdin);
+  scanf("%c",&start);
+  printf("Enter end char:");
+  __fpurge(stdin);
+  scanf("%c",&end);
+
+  dispGivenAsciiChars(start,end);
+}
+
+ex11:->
+#include <string.h>
+#include <stdio.h>
+
+void  swap(char *stptr,char *enptr)
+{
+  char temp;
+  temp=*enptr;
+  *enptr=*stptr;
+  *stptr=temp;
+}  
+extern void reverse(char *str)
+{
+  int len;
+  char array[80],*stptr,*enptr;
+  printf("\nEnter string:");
+  scanf("%s",array);
+  printf("\nBefore reversing string:%s",array);
+  len=strlen(array);
+  printf("len=%d",len);
+  stptr=array;
+  enptr=&array[len-1];
+  
+  while(1)
+  {
+    if(stptr>enptr)
+      break;
+
+    swap(stptr,enptr);
+    stptr++;
+    enptr--;
+  }
+  printf("\nAfter reversing string:%s\n",array);
+}
+main()
+{
+ char *str;
+ reverse(str);
+}  
+
+ex12:->
+void dispDecimalInteger(int val);
+
+main()
+{
+  int val;
+  printf("Enter decimal number:");
+  scanf("%d",&val);
+  dispDecimalInteger(val);
+}
+
+void dispDecimalInteger(int val)
+{
+  int i=0;
+  char array[4];
+  while(val)
+  {
+    array[i++]=(val%10)+'0';
+    val=val/10;
+  }
+  while(i>0)
+  {
+    putchar(array[--i]);
+    printf("%c",array[--i]);
+  }
+}
+
+ex12of2:->
+void dispDecimalInteger(int val);
+void reverse(char *str);
+void swap(char *stptr,char *enptr);
+main()
+{
+  int val;
+  printf("Enter decimal number:");
+  scanf("%d",&val);
+  dispDecimalInteger(val);
+
+}
+void dispDecimalInteger(int val)
+{
+  int i=0;
+  char array[4];
+  while(val)
+  {
+    array[i++]=(val%10)+'0';
+    val=val/10;
+  }
+  reverse(array);
+  /*while(i>0)
+  {
+    putchar(array[--i]);
+  }*/
+  for(i=0;array[i]!='\0';i++)
+  putchar(array[i]);
+}
+   
+void reverse(char *str)
+{
+  int len;
+  char temp;
+  char *stptr, *enptr;
+  len=strlen(str);
+  stptr=str;
+  enptr=&str[len-1];
+  while(1)
+  {
+   swap(stptr,enptr);
+   stptr++;
+   enptr--;
+   if(stptr>enptr)
+     break;
+  }
+}
+   
+void swap(char *stptr,char *enptr)
+{
+char temp;
+temp=*enptr;
+*enptr=*stptr;
+*stptr=temp;
+} 
+
+ex13:->
+
+void dispAsHexNumber(int val);
+main()
+{
+  int val;
+  printf("Enter decimal number:");
+  scanf("%d",&val);
+  dispAsHexNumber(val);
+
+}
+void dispAsHexNumber(int val)
+{
+  int i=0,hex;
+  char array[4];
+  while(val)
+  {
+    hex=val%16;
+    if(hex<10)
+    array[i++]=(val%16)+'0';
+    else
+    array[i++]=(val%16)+'0'+39;
+    val=val/16;
+  }
+  while(i>0)
+  {
+    putchar(array[--i]);
+  }
+}
+
+ex14:->
+main()
+{
+   char array[5]={49,'2','3','4','\0'};
+   int binary;
+   binary=getDecimalInteger(array);
+   printf("%d",binary);
+}
+int getDecimalInteger(char *ptr)
+{
+  int sum=0;
+  while(*ptr)
+  {
+    sum=(sum*10)+(*ptr)-'0';
+    ptr++;
+  }
+  return(sum);
+}
+
+ex15:->
+main()
+{
+   char array[]={49};
+   unsigned int binary;
+   binary=getHexNumber(array);
+   printf("%x",binary);
+}
+int getHexNumber(char *ptr)
+{
+  int hex;
+  int sum=0;
+  while(*ptr)
+  {
+    hex=(*ptr)-'0';
+    if(hex<10)
+    sum=(sum*10)+(*ptr)-'0';
+    else
+    sum=(sum*10)+(*ptr)-'0'+39;
+    ptr++;
+  }
+  return(sum);
+}
+
+
+
+
+
+
