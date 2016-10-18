@@ -1,0 +1,687 @@
+link.h:->
+typedef struct sampNode
+{
+  int info;
+  struct sampNode *pNxtNode;
+}sampNode_t;
+
+sampNode_t *pHead;
+sampNode_t *pTail;
+
+void fillNode(sampNode_t *pNode);
+void dispNode(sampNode_t *p);
+void addNodeToHead(sampNode_t *pNode);
+void addNodeToTail(sampNode_t *pNode);
+void insertNodeInSortedList(sampNode_t *pNode); 
+
+#define SUCCESS 2
+#define NOT_FOUND 0
+
+ex1.c:->
+#if 0
+Adds given node to the tail of the linked list.
+delete the first node in the linked list whose info field matches with given value.
+search and return pointer to the node whose info field value matches with the given value.
+
+#endif
+//STANDARD HEADER FILES
+#include <stdio.h>
+#include <stdlib.h>
+
+//USER DEFINED HEADER FILES
+#include "link.h"
+/*
+ * displays all the nodes in the linked list starting from head of the linked list.use the above function.
+ */
+void dispNodes()
+{
+  sampNode_t *pN;
+  pN=pHead;
+  while(pN)
+  {
+    dispNode(pN);
+    pN=pN->pNxtNode;
+  }
+}
+
+void addNodeToTail(sampNode_t *pNode)
+{
+   sampNode_t *temp;
+  if(pHead==NULL)
+  {
+    fillNode(pNode);
+    pNode->pNxtNode=NULL;
+    pHead=pNode;
+  }
+  else
+  {
+    temp=pHead;
+    while(temp->pNxtNode)
+      temp=temp->pNxtNode;
+    
+    fillNode(pNode);
+    temp->pNxtNode=pNode;
+    pNode->pNxtNode=NULL;
+  }  
+}      
+int deleteNode(int val)
+{
+  sampNode_t *temp,*previous;
+  temp=pHead;
+  printf("Enter the number:");
+  scanf("%d",&val);
+  while(temp)
+  {
+    if(temp->info==val)
+    {
+         if(temp==pHead)
+         {
+             pHead=pHead->pNxtNode;
+             return SUCCESS;
+         }
+         else
+         {
+            previous->pNxtNode=temp->pNxtNode;
+            free(temp);
+            return SUCCESS;
+         }    
+    }
+    else
+    {
+         previous=temp;
+         temp=temp->pNxtNode;
+    }
+  }
+  return NOT_FOUND;
+}
+sampNode_t *searchNode(int val)
+{
+  sampNode_t *temp=pHead;
+  printf("Enter the number:");
+  scanf("%d",&val);
+  while(temp)
+  {
+    if(temp->info==val)
+      return temp;
+    else
+    {
+     temp=temp->pNxtNode;
+    }
+  }
+  return NULL;
+}  
+ 
+main()
+{
+  int ch,num,res;
+  sampNode_t *ret;
+  sampNode_t *p;
+  while(1)
+  {
+    printf("1.Add node to head.");
+    printf("2.Display.");
+    printf("3.Add node to Tail.");
+    printf("4.Delete node.");
+    printf("5.Search node.");
+    printf("6.Exit.");
+    printf("Enter choice:");
+    scanf("%d",&ch);
+    switch(ch)
+    {
+      case 1:
+           p=(sampNode_t *)malloc(sizeof(sampNode_t));
+           addNodeToHead(p);
+           break;
+     case 2:
+           dispNodes();
+           break;
+    case 3:
+           p=(sampNode_t *)malloc(sizeof(sampNode_t));
+           addNodeToTail(p);
+           break;   
+    case 4:
+          res=deleteNode(num);
+          printf("\n%d\n",res);
+          break;    
+    case 5:
+          ret=searchNode(num);
+          printf("\n%d\n",ret);
+          break;    
+    case 6:
+          exit(1);
+    }
+  }
+}       
+
+
+/*
+ * Adds given node to the head of the linked list
+ */
+void addNodeToHead(sampNode_t *pNode)
+{
+  fillNode(pNode);
+  pNode->pNxtNode=pHead;
+  pHead=pNode;
+}
+
+/*
+ * Fill the info filed of given node by taking data from user.
+ */
+void fillNode(sampNode_t *pNode)
+{
+  printf("Enter Phone No:");
+  scanf("%d",&pNode->info);
+}
+
+/*
+ *displays the structure fields only info field.
+ */
+void dispNode(sampNode_t *p)
+{
+  printf("The element:%d\n",p->info);
+}
+
+ex2.c:->
+
+#include <stdio.h>
+#include "link.h"
+
+void addNodeToHead(sampNode_t *pNode)
+{ 
+  fillNode(pNode);
+  if(pHead==NULL)
+  {
+     pNode->pNxtNode=pHead;
+     pHead=pNode;
+     pTail=pNode;
+  }
+  else
+  {
+     pNode->pNxtNode=pHead;
+     pHead=pNode;
+  }
+     
+}
+void fillNode(sampNode_t *pNode)
+{
+  printf("Enter Phone No:");
+  scanf("%d",&pNode->info);
+}
+void dispNodes()
+{
+  sampNode_t *pN;
+  pN=pHead;
+  while(pN)
+  {
+    dispNode(pN);
+    pN=pN->pNxtNode;
+  }
+}
+void dispNode(sampNode_t *p)
+{
+  printf("The element:%d\n",p->info);
+}
+void addNodeToTail(sampNode_t *pNode)
+{
+   //sampNode_t *temp;
+   fillNode(pNode);
+   pNode->pNxtNode=NULL;
+  if(pTail==NULL)
+  {
+    pTail=pNode;
+    pHead=pNode;
+  }
+  else
+  {
+    //temp=pHead;
+    //while(temp->pNxtNode)
+     // temp=temp->pNxtNode;
+    
+    pTail->pNxtNode=pNode;
+    pTail=pNode;
+    //pNode->pNxtNode=NULL;
+  }  
+}      
+int deleteNode(int val)
+{
+  sampNode_t *temp,*previous;
+  temp=pHead;
+  printf("Enter the number:");
+  scanf("%d",&val);
+  while(temp)
+  {
+    if(temp->info==val)
+    {
+         if(temp==pHead)
+         {
+             pHead=pHead->pNxtNode;
+             return SUCCESS;
+         }
+         else
+         {
+            previous->pNxtNode=temp->pNxtNode;
+            free(temp);
+            return SUCCESS;
+         }    
+    }
+    else
+    {
+         previous=temp;
+         temp=temp->pNxtNode;
+    }
+  }
+  return NOT_FOUND;
+}
+sampNode_t *searchNode(int val)
+{
+  sampNode_t *temp=pHead;
+  printf("Enter the number:");
+  scanf("%d",&val);
+  while(temp)
+  {
+    if(temp->info==val)
+      return temp;
+    else
+    {
+     temp=temp->pNxtNode;
+    }
+  }
+  return NULL;
+}  
+ 
+main()
+{
+  int ch,num,res;
+  sampNode_t *ret;
+  sampNode_t *p;
+  while(1)
+  {
+    printf("1.Add node to head.");
+    printf("2.Display.");
+    printf("3.Add node to Tail.");
+    printf("4.Delete node.");
+    printf("5.Search node.");
+    printf("6.Exit.");
+    printf("Enter choice:");
+    scanf("%d",&ch);
+    switch(ch)
+    {
+      case 1:
+           p=(sampNode_t *)malloc(sizeof(sampNode_t));
+           addNodeToHead(p);
+           break;
+     case 2:
+           dispNodes();
+           break;
+    case 3:
+           p=(sampNode_t *)malloc(sizeof(sampNode_t));
+           addNodeToTail(p);
+           break;   
+    case 4:
+          res=deleteNode(num);
+          printf("\n%d\n",res);
+          break;    
+    case 5:
+          ret=searchNode(num);
+          printf("\n%d\n",ret);
+          break;    
+    case 6:
+          exit(1);
+    }
+  }
+}    
+
+ex3.c:->
+
+#include <stdio.h>
+#include "link.h"
+
+/*void addNodeToHead(sampNode_t *pNode)
+{
+  fillNode(pNode);
+  pNode->pNxtNode=pHead;
+  pHead=pNode;
+}*/
+void fillNode(sampNode_t *pNode)
+{
+  printf("Enter Phone No:");
+  scanf("%d",&pNode->info);
+}
+void dispNodes()
+{
+  sampNode_t *pN;
+  pN=pHead;
+  while(pN)
+  {
+    dispNode(pN);
+    pN=pN->pNxtNode;
+  }
+}
+void dispNode(sampNode_t *p)
+{
+  printf("The element:%d\n",p->info);
+}
+/*void addNodeToTail(sampNode_t *pNode)
+{
+   sampNode_t *temp;
+  if(pHead==NULL)
+  {
+    fillNode(pNode);
+    pNode->pNxtNode=NULL;
+    pHead=pNode;
+  }
+  else
+  {
+    temp=pHead;
+    while(temp->pNxtNode)
+      temp=temp->pNxtNode;
+    
+    fillNode(pNode);
+    temp->pNxtNode=pNode;
+    pNode->pNxtNode=NULL;
+  }  
+} */     
+int deleteNode(int val)
+{
+  sampNode_t *temp,*previous;
+  temp=pHead;
+  printf("Enter the number:");
+  scanf("%d",&val);
+  while(temp)
+  {
+    if(temp->info==val)
+    {
+         if(temp==pHead)
+         {
+             pHead=pHead->pNxtNode;
+             return SUCCESS;
+         }
+         else
+         {
+            previous->pNxtNode=temp->pNxtNode;
+            free(temp);
+            return SUCCESS;
+         }    
+    }
+    else
+    {
+         previous=temp;
+         temp=temp->pNxtNode;
+    }
+  }
+  return NOT_FOUND;
+}
+sampNode_t *searchNode(int val)
+{
+  sampNode_t *temp=pHead;
+  printf("Enter the number:");
+  scanf("%d",&val);
+  while(temp)
+  {
+    if(temp->info==val)
+      return temp;
+    else
+    {
+     temp=temp->pNxtNode;
+    }
+  }
+  return NULL;
+}  
+void insertNodeInSortedList(sampNode_t *pNode)
+{
+  int val;
+  sampNode_t *previous,*temp=pHead;
+  printf("Enter the Phone(info):");
+  scanf("%d",&val);
+  pNode->info=val;
+  if(pHead==NULL)
+  {
+    pNode->pNxtNode=NULL;
+    pHead=pNode;
+  }
+  else
+  {
+     if(val < temp->info)
+     {
+        pNode->pNxtNode=temp;
+        pHead=pNode;
+     }
+     else
+     {
+        while((temp!=NULL)&&(val > temp->info))
+       {
+           previous=temp;
+           temp=temp->pNxtNode;
+       }
+       pNode->pNxtNode=previous->pNxtNode;
+       previous->pNxtNode=pNode;
+    }
+  }
+}
+main()
+{
+  int ch,num,res;
+  sampNode_t *ret;
+  sampNode_t *p;
+  while(1)
+  {
+    printf("1.Insert sorted.");
+    printf("2.Display.");
+    printf("3.Delete node.");
+    printf("4.Search node.");
+    printf("5.Exit.");
+    printf("Enter choice:");
+    scanf("%d",&ch);
+    switch(ch)
+    {
+      case 1:
+           p=(sampNode_t *)malloc(sizeof(sampNode_t));
+           insertNodeInSortedList(p); 
+           break;
+     case 2:
+           dispNodes();
+           break;
+    case 3:
+          res=deleteNode(num);
+          printf("\n%d\n",res);
+          break;    
+    case 4:
+          ret=searchNode(num);
+          printf("\n%d\n",ret);
+          break;    
+    case 5:
+          exit(1);
+    }
+  }
+}       
+
+ex4:->
+
+ex4.h:->
+
+typedef struct sampNode
+{
+  int info;
+  struct sampNode *pNxtNode;
+  struct sampNode *pPrvNode;
+}sampNode_t;
+sampNode_t *pHead;
+sampNode_t *pTail;
+#define SUCCESS 2
+#define NOT_FOUND 0
+
+ex4.c:->
+
+#include <stdio.h>
+#include "ex4.h"
+
+void fillNode(sampNode_t *pNode)
+{
+  printf("Enter Phone No:");
+  scanf("%d",&pNode->info);
+}
+void addNodeToHead(sampNode_t *pNode)
+{ 
+  fillNode(pNode);
+  if(pHead==NULL)
+  {
+     pNode->pNxtNode=pHead;
+     pHead=pNode;
+     pTail=pNode;
+  }
+  else
+  {
+     pNode->pNxtNode=pHead;
+     pHead=pNode;
+  }
+     
+}
+void dispNode(sampNode_t *p)
+{
+  printf("The element:%d\n",p->info);
+}
+void dispNodes()
+{
+  sampNode_t *pN;
+  pN=pHead;
+  while(pN)
+  {
+    dispNode(pN);
+    pN=pN->pNxtNode;
+  }
+}
+void addNodeToTail(sampNode_t *pNode)
+{
+   //sampNode_t *temp;
+   fillNode(pNode);
+   pNode->pNxtNode=NULL;
+  if(pTail==NULL)
+  {
+    pTail=pNode;
+    pHead=pNode;
+  }
+  else
+  {
+    //temp=pHead;
+    //while(temp->pNxtNode)
+     // temp=temp->pNxtNode;
+    
+    pTail->pNxtNode=pNode;
+    pTail=pNode;
+    //pNode->pNxtNode=NULL;
+  }  
+}      
+int deleteNode(int val)
+{
+  sampNode_t *temp,*previous;
+  temp=pHead;
+  printf("Enter the number:");
+  scanf("%d",&val);
+  while(temp)
+  {
+    if(temp->info==val)
+    {
+         if(temp==pHead)
+         {
+             pHead=pHead->pNxtNode;
+             return SUCCESS;
+         }
+         else
+         {
+            previous->pNxtNode=temp->pNxtNode;
+            free(temp);
+            return SUCCESS;
+         }    
+    }
+    else
+    {
+         previous=temp;
+         temp=temp->pNxtNode;
+    }
+  }
+  return NOT_FOUND;
+}
+sampNode_t *searchNode(int val)
+{
+  sampNode_t *temp=pHead;
+  printf("Enter the number:");
+  scanf("%d",&val);
+  while(temp)
+  {
+    if(temp->info==val)
+      return temp;
+    else
+     temp=temp->pNxtNode;
+  }
+  return NULL;
+}  
+void deleteNodeFromDll(sampNode_t *pNode)
+{
+  sampNode_t *temp;
+  if(pNode==pHead)
+  {
+    pNode->pNxtNode->pPrvNode=NULL;
+    pHead=pNode->pNxtNode;
+  }
+  else if(pNode==pTail)
+  {  
+    pNode->pPrvNode->pNxtNode=NULL;
+    pTail=pNode->pPrvNode;
+  }
+  else 
+  {
+  pNode->pPrvNode->pNxtNode=pNode->pNxtNode;
+  pNode->pNxtNode->pPrvNode=pNode->pPrvNode;
+  }
+}
+main()
+{
+  int ch,num,res;
+  sampNode_t *ret;
+  sampNode_t *p;
+  while(1)
+  {
+    printf("1.Add node to head.");
+    printf("2.Display.");
+    printf("3.Add node to Tail.");
+    printf("4.Delete node by traversing from phead.");
+    printf("5.Delete node without traversing the linked list.");
+    printf("6.Search node.");
+    printf("7.Exit.");
+    printf("Enter choice:");
+    scanf("%d",&ch);
+    switch(ch)
+    {
+      case 1:
+           p=(sampNode_t *)malloc(sizeof(sampNode_t));
+           addNodeToHead(p);
+           break;
+     case 2:
+           dispNodes();
+           break;
+    case 3:
+           p=(sampNode_t *)malloc(sizeof(sampNode_t));
+           addNodeToTail(p);
+           break;   
+    case 4:
+          res=deleteNode(num);
+          printf("\n%d\n",res);
+          break;    
+    case 5:
+          ret=searchNode(num);
+          deleteNodeFromDll(ret);
+          break;
+    case 6:
+          ret=searchNode(num);
+          printf("\n%d\n",ret);
+          break;    
+    case 7:
+          exit(1);
+    }
+  }
+}       
+
+
+
+
+
