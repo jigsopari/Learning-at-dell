@@ -1,0 +1,230 @@
+\ex2.h:->
+#define Q_FULL_ERROR 0
+#define Q_EMPTY_ERROR 1
+#define SUCCESS 2
+#define MAX_Q_SIZE 10 
+typedef struct element
+{
+  int empNo;
+  int salary;
+  struct element *pNxt;
+}element_t;
+ element_t *wrHead,*rdHead;
+void displayQueue();
+int addElementToQ(element_t *);
+
+ex2.c:->
+
+#include <stdio.h>
+#include "ex2.h"
+
+main()
+{
+   int ch;
+   element_t *p;
+   while(1)
+   {
+      printf("1.add element to queue");
+      printf("2.Display all elements in the queue");
+      printf("3.get element from queue");
+      printf("4.exit");
+      printf("Enter choice:");
+      scanf("%d",&ch);
+      switch(ch)
+      {
+         case 1:
+              p=(element_t *)malloc(sizeof(element_t));
+              addElementToQ(p);
+              break;
+         case 2:
+              displayQueue();
+              break;
+        case 3:
+              p=(element_t *)malloc(sizeof(element_t));
+              getElementFromQ(p);
+              break;
+        case 4:
+              exit(1);
+     }
+   }
+}
+
+llq.c:->
+#include <stdio.h>
+#include "ex2.h"
+
+int addElementToQ(element_t *pElm)
+{
+   printf("Enter Employee Number:");
+   scanf("%d",&pElm->empNo);
+   printf("Enter salary:");
+   scanf("%d",&pElm->salary);
+   if(wrHead==NULL)
+   {
+      wrHead=rdHead=pElm;
+      pElm->pNxt=NULL;
+   }
+   else
+   {
+      wrHead->pNxt=pElm;
+      pElm->pNxt=NULL;
+      wrHead=pElm;
+   }
+}       
+void displayQueue()
+{
+  element_t *temp;
+  temp=rdHead;
+  while(temp)
+  {
+    printf("Emp No:%d ",temp->empNo);
+    printf("Salary:%d\n",temp->salary);
+    temp=temp->pNxt;
+  }
+}  
+int getElementFromQ(element_t *pElm)
+{
+  if(rdHead==NULL)
+    return Q_EMPTY_ERROR;
+  else
+    pElm=rdHead;
+    rdHead=rdHead->pNxt;
+    printf("Emp No:%d ",pElm->empNo);
+    printf("Salary:%d\n",pElm->salary);
+    return SUCCESS; 
+}
+
+makefile:->
+target2: ex2.o llq.o
+	cc -o target2 ex2.o llq.o
+ex2.o: ex2.c
+	cc -c ex2.c
+llq.o: llq.c
+	cc -c llq.c
+clean: 
+	rm *.o
+  
+  file.H->
+  #define Q_FULL_ERROR 2
+#define Q_EMPTY_ERROR 1
+#define SUCCESS 0
+#define MAX_Q_SIZE 10 
+typedef struct
+{
+  int empNo;
+  int salary;
+}element_t;
+typedef struct
+{
+  int rdindx;
+  int wrindx;
+  int noOfElms;
+  element_t qBuf[MAX_Q_SIZE];
+}cq_t;
+cq_t stval;
+void displayQueue();
+int addElementToQ(element_t *);
+
+ex1.c:->
+#include <stdio.h>
+#include "file.h"
+
+main()
+{
+   int ch,status;
+   element_t *p;
+   while(1)
+   {
+      printf("1.add element to queue");
+      printf("2.get element from queue");
+      printf("3.Display all elements in the queue");
+      printf("4.exit");
+      printf("Enter choice:");
+      scanf("%d",&ch);
+      switch(ch)
+      {
+         case 1:
+              p=(element_t *)malloc(sizeof(element_t));
+              status=addElementToQ(p);
+	      if(status==0)
+	        printf("ELEMENT ADDED SUCCESSFULLY\n");
+	      else
+	        printf("QUEUE FULL ERROR\n");
+              break;
+         case 3:
+              displayQueue();
+              break;
+         case 2:
+              p=(element_t *)malloc(sizeof(element_t));
+              status=getElementFromQ(p);
+	      if(status==0)
+	      {
+                 printf("emp no.%d ",p->empNo);  
+                 printf("salary:%d\n ",p->salary);  
+	      }
+	      else 
+	        printf("QUEUE EMPTY ERROR\n");
+	         
+              break;
+        case 4:
+              exit(1);
+     }
+   }
+}
+
+cirq.c:->
+#include <stdio.h>
+#include "file.h"
+int addElementToQ(element_t *pElm)
+{
+   printf("Enter Employee Number:");
+   scanf("%d",&pElm->empNo);
+   printf("Enter salary:");
+   scanf("%d",&pElm->salary);
+   if(stval.noOfElms==MAX_Q_SIZE)
+      return Q_FULL_ERROR;
+   else
+   {
+      stval.qBuf[stval.wrindx++]=*pElm;
+   }   
+   if(stval.wrindx==MAX_Q_SIZE)
+      stval.wrindx=0;
+   stval.noOfElms++;
+   return SUCCESS;
+}
+void displayQueue()
+{
+  int i;
+  for(i=stval.rdindx;i<stval.wrindx;i++)
+  {
+     printf("emp no.%d ",stval.qBuf[i].empNo);  
+     printf("salary:%d\n ",stval.qBuf[i].salary);  
+  }
+}
+int getElementFromQ(element_t *pElm)
+{
+   if(stval.noOfElms==0)
+      return Q_EMPTY_ERROR;
+   else
+      *pElm=stval.qBuf[stval.rdindx++];
+   if(stval.rdindx==MAX_Q_SIZE)
+      stval.rdindx=0;
+   stval.noOfElms--;
+     return SUCCESS;         
+}
+    
+       makefile:->
+       target: ex1.o cirq.o
+	cc -o target ex1.o cirq.o
+ex1.o: ex1.c
+	cc -c ex1.c
+cirq.o: cirq.c
+	cc -c cirq.c
+clean: 
+	rm *.o
+
+
+
+
+
+
