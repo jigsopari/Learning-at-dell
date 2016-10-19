@@ -1,0 +1,117 @@
+hash.h:->
+
+#define MAX 11 
+typedef struct hashItem_s
+{
+   char name[20];
+   int age;
+   int salary;
+   int phoneNum;
+   struct hashItem_s *pNext;
+} hashItem_t;
+hashItem_t *hBuf[MAX];
+
+
+ex1.c:->
+#include <stdio.h>
+#include "hash.h"
+main()
+{
+  int ch,ret;
+  char key[20];
+  hashItem_t *p;
+  while(1)
+  {
+     printf("\n1.add Element to hash list");
+     printf("\n2.search Element in hash list");
+     printf("\n3.Exit");
+     printf("\nEnter choice:");
+     scanf("%d",&ch);
+     switch(ch)
+     {
+        case 1:
+             p=(hashItem_t *)malloc(sizeof(hashItem_t));
+             ret=addToHashList(p);
+             printf("\n%d\n",ret);
+             break;
+        case 2:
+              printf("Enter the name:");
+              scanf("%s",key);
+             searchHashList(key);    
+             break;
+        case 3:
+             exit(1);
+    }
+  }
+}   
+hash.c:->
+#include <stdio.h>
+#include "hash.h"
+int addToHashList(hashItem_t *phashItem)
+{
+   int index;
+   printf("Enter name:");
+   scanf("%s",phashItem->name);
+   printf("Enter age:");
+   scanf("%d",&phashItem->age);
+   printf("Enter salary:");
+   scanf("%d",&phashItem->salary);
+   printf("Enter phone Number:");
+   scanf("%d",&phashItem->phoneNum);
+   index=hash(phashItem->name);
+   if(hBuf[index]==NULL)
+   {
+     phashItem->pNext=NULL;
+     hBuf[index]=phashItem;
+   }
+   else
+   {
+      phashItem->pNext=hBuf[index];
+      hBuf[index]=phashItem;
+   }
+}
+
+int hash(char *arr)
+{
+   int sum=0;
+   while(*arr)
+   {
+     sum=sum + 3*(5 + *arr);
+     arr++;
+   }
+   sum=sum%11;
+   return  sum;
+}
+int searchHashList(char *s)
+{
+   int index;
+   hashItem_t *temp;
+   index=hash(s);  
+   temp=hBuf[index];
+   while((temp!=NULL) && strcmp(temp->name,s))
+   {
+      temp=temp->pNext;
+   }
+  if(temp==NULL)
+  {
+    printf("Not Found");
+  }
+  else
+  {
+    printf("\nName:%s",temp->name);
+    printf("\nAge:%d",temp->age);
+    printf("\nsalary:%d",temp->salary);
+    printf("\nphone Number:%d\n",temp->phoneNum);
+  }
+}
+  
+  makefile:->
+  
+  target: ex1.o hash.o
+	cc -o target ex1.o hash.o
+ex1.o: ex1.c
+	cc -c ex1.c
+hash.o: hash.c
+	cc -c hash.c
+clean:
+	rm *.o
