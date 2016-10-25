@@ -1,0 +1,38 @@
+#include<stdio.h>
+/* these headers are for open function*/
+#include<sys/types.h>
+#include<sys/stat.h>
+#include<fcntl.h>
+/*this header is for exit function*/
+#include<stdlib.h>
+/*this header is for close function*/
+#include<unistd.h>
+
+void main()
+{
+int fd;
+char buf[15];
+
+fd=open("mytext.txt",O_CREAT|O_WRONLY,0600);
+if(fd==-1)
+{
+printf("file not created\n");
+exit(1);
+}
+
+write(fd,"Hello world!\n",13);
+close(fd);
+
+fd=open("mytext.txt",O_RDONLY);
+
+if(fd==-1)
+{
+printf("file not created\n");
+exit(1);
+}
+
+read(fd,buf,13);
+buf[13]='\0';
+close(fd);
+printf("buf:%s\n",buf);
+}
