@@ -1,0 +1,30 @@
+#include<stdio.h>
+#include<unistd.h>
+void main()
+{
+int childpid;
+int c1=0,c2=0;
+printf("before forking\n");
+childpid=fork();
+if(childpid==0)
+{
+printf("this is the child process\n");
+while(c1<=10)
+{
+printf("child process:%d\n",c1);
+sleep(1);
+c1++;
+}
+}
+else
+{
+printf("this is the parent process\n");
+printf("childpid is:%d\n",childpid);
+while(c2<=20)
+{
+printf("parent process:%d\n",c2);
+sleep(1);
+c2++;
+}
+}
+}
