@@ -1,0 +1,24 @@
+#include<stdio.h>
+#include<sys/types.h>
+#include<dirent.h>
+#include<stdlib.h>
+
+void main()
+{
+
+DIR *dir;
+struct dirent *sd;
+
+dir=opendir(".");
+
+if(dir==NULL)
+{
+printf("unable to open directory");
+exit(1);
+}
+while((sd=readdir(dir))!=NULL)
+{
+printf("%s\n",sd->d_name);
+}
+closedir(dir);
+}
